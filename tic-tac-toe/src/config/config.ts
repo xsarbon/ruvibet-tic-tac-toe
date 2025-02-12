@@ -1,5 +1,6 @@
 export default{
     type: Phaser.AUTO,
-    width:618,
-    height:618
+    width:1920,
+    height:1080,
+    backgroundColor:'#d3d3d3',
 };
