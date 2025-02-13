@@ -12,8 +12,8 @@ export default class PreloadScene extends Phaser.Scene{
         this.load.image('Reload',"assets/Reload.png");
     }
     create(){
-        var playButton=this.add.image(960,900,'playButton');
-        playButton.setScale(0.05);
+        var playButton=this.add.image(960,500,'playButton');
+        playButton.setScale(0.2);
         playButton.setInteractive();
         playButton.on('pointerdown',function (event) {
             this.scene.start('SelectPlayer');

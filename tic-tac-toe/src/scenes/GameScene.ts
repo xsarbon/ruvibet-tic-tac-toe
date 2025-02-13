@@ -10,6 +10,10 @@ export default class GameScene extends Phaser.Scene {
     private currentPlayer: string;
     private cells: Phaser.GameObjects.Image[][] = [];
     private clickSound!: Phaser.Sound.BaseSound;
+    private timer: Phaser.Time.TimerEvent;
+    private timeLeft: number = 10;
+    private timerText: Phaser.GameObjects.Text;
+    
 
     constructor() {
         super('GameScene');
@@ -23,6 +27,15 @@ export default class GameScene extends Phaser.Scene {
     create() {
         this.resetGame();
         this.clickSound = this.sound.add('click');
+
+        this.timerText = this.add.text(960, 120, `Tiempo: ${this.timeLeft}s`, {
+            fontSize: "40px",
+            color: "#000",
+            fontFamily: "Arial",
+            fontStyle: "bold"
+        }).setOrigin(0.5, 0.5);
+
+        this.startTimer();
 
         for (let row = 0; row < 3; row++) {
             this.cells[row] = [];
@@ -78,6 +91,7 @@ export default class GameScene extends Phaser.Scene {
             this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
         }else{
             this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
+            this.startTimer();
         }
 
     }
@@ -101,4 +115,30 @@ export default class GameScene extends Phaser.Scene {
     isBoardFull(): boolean {
         return this.board.every(row => row.every(cell => cell !== ""));
     }
-};
+
+    startTimer() {
+        // Restablecer el tiempo
+        this.timeLeft = 10;
+        this.timerText.setText(`${this.timeLeft}`);
+
+        // Cancelar cualquier temporizador anterior
+        if (this.timer) {
+            this.timer.remove();
+        };
+
+        this.timer = this.time.addEvent({
+            delay: 1000,  // 1 segundo
+            loop: true,   // Repetir cada segundo
+            callback: () => {
+                this.timeLeft--;
+                this.timerText.setText(`${this.timeLeft}`);
+
+                // Si el tiempo se acaba, cambiar al siguiente jugador
+                if (this.timeLeft <= 0) {
+                    this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
+                    this.startTimer();  // Reiniciar el temporizador
+                }
+            }
+        });
+    
+}};
