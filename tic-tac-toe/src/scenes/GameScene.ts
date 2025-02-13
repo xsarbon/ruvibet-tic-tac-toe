@@ -15,6 +15,7 @@ export default class GameScene extends Phaser.Scene {
         super('GameScene');
     }
     create() {
+        this.resetGame();
         this.clickSound = this.sound.add('click');
 
         for (let row = 0; row < 3; row++) {
@@ -33,6 +34,23 @@ export default class GameScene extends Phaser.Scene {
 
         var Fondo = this.add.image(960, 540, 'Fondo');
     }
+
+
+    resetGame() {
+        this.board = [
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""],
+        ];
+        this.currentPlayer = "x";
+        this.cells.forEach(row => {
+            row.forEach(cell => {
+                cell.setVisible(false);
+            });
+        });
+    }
+
+
 
     handleCellClick(row: number, col: number, cell: Phaser.GameObjects.Rectangle) {
         if (this.board[row][col] !== "") return;
@@ -59,7 +77,7 @@ export default class GameScene extends Phaser.Scene {
             }
         }
 
-        if (
+        if ( //diagonales
             this.board[0][0] === player && this.board[1][1] === player && this.board[2][2] === player ||
             this.board[0][2] === player && this.board[1][1] === player && this.board[2][0] === player
         ) {

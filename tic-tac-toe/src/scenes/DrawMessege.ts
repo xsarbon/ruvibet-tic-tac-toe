@@ -5,6 +5,6 @@ export default class DrawMessege extends Phaser.Scene {
     super("DrawMessege");
   }
   create(){
-    this.add.image(960,560,"x").setScale(0.1);
+    this.add.image(960,560,"Reload").setScale(0.1);
   }
 }
