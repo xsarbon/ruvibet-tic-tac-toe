@@ -60,20 +60,21 @@ export default class GameScene extends Phaser.Scene {
         this.tweens.add({
             targets: playerImg,
             alpha:1,
-            scaleX:0.6,
-            scaleY:0.6,
+            scaleX:0.5,
+            scaleY:0.5,
             duration: 500,
-            ease: 'Power2',
-            onComplete: () => {
-                if(this.isBoardFull()){
-                    this.time.delayedCall(500, () => this.scene.start("DrawMessege"));
-                }else if(this.checkWinner(this.currentPlayer)){
-                    this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
-                }else{
-                    this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
-                }
-            }
+            ease: 'Power2'
         });
+
+
+        if(this.isBoardFull()){
+            this.time.delayedCall(500, () => this.scene.start("DrawMessege"));
+        }else if(this.checkWinner(this.currentPlayer)){
+            this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
+        }else{
+            this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
+        }
+
     }
     checkWinner(player: string): boolean {
         for (let i = 0; i < 3; i++) {
