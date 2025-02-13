@@ -7,13 +7,19 @@ export default class GameScene extends Phaser.Scene {
         ["", "", ""],
         ["", "", ""],
     ];
-    private currentPlayer: string = "x";
+    private currentPlayer: string;
     private cells: Phaser.GameObjects.Image[][] = [];
     private clickSound!: Phaser.Sound.BaseSound;
 
     constructor() {
         super('GameScene');
     }
+
+    init(data: { playerSymbol: string }) {
+        this.currentPlayer = data.playerSymbol;        
+    }
+    
+
     create() {
         this.resetGame();
         this.clickSound = this.sound.add('click');
@@ -42,7 +48,6 @@ export default class GameScene extends Phaser.Scene {
             ["", "", ""],
             ["", "", ""],
         ];
-        this.currentPlayer = "x";
         this.cells.forEach(row => {
             row.forEach(cell => {
                 cell.setVisible(false);

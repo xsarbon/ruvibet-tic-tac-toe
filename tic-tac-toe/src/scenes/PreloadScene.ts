@@ -16,7 +16,7 @@ export default class PreloadScene extends Phaser.Scene{
         playButton.setScale(0.05);
         playButton.setInteractive();
         playButton.on('pointerdown',function (event) {
-            this.scene.start('GameScene');
+            this.scene.start('SelectPlayer');
         }, this);
     }
 }
