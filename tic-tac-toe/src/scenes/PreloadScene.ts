@@ -9,6 +9,7 @@ export default class PreloadScene extends Phaser.Scene{
         this.load.image('Fondo','assets/Board.png');
         this.load.image('o','assets/O.png');
         this.load.audio('click', "assets/Tap.mp3");
+        this.load.image('Reload',"assets/Reload.png");
     }
     create(){
         var playButton=this.add.image(960,900,'playButton');

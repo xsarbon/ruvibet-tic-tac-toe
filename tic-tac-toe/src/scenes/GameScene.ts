@@ -1,4 +1,5 @@
 import 'phaser';
+import VictoryMessege from './VictoryMessege';
 export default class GameScene extends Phaser.Scene {
 
     private board: string[][] = [
@@ -40,5 +41,11 @@ export default class GameScene extends Phaser.Scene {
         const symbol = this.add.image(cell.x, cell.y, this.currentPlayer.toLowerCase());
         symbol.setScale(0);
         this.add.image(cell.x, cell.y,`${this.currentPlayer}`).setScale(0.5);
-    }
+
+        if (this.checkWinner()) {
+            this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
+          } else {
+            this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
+          }
+        }
 };
