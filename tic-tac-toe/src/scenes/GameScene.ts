@@ -126,23 +126,20 @@ export default class GameScene extends Phaser.Scene {
     }
 
     startTimer() {
-        // Restablecer el tiempo
         this.timeLeft = 10;
         this.timerText.setText(`${this.timeLeft}`);
 
-        // Cancelar cualquier temporizador anterior
         if (this.timer) {
             this.timer.remove();
         };
 
         this.timer = this.time.addEvent({
-            delay: 1000,  // 1 segundo
-            loop: true,   // Repetir cada segundo
+            delay: 1000,  
+            loop: true,   
             callback: () => {
                 this.timeLeft--;
                 this.timerText.setText(`${this.timeLeft}`);
 
-                // Si el tiempo se acaba, cambiar al siguiente jugador
                 if (this.timeLeft <= 0) {
                     this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
                     this.startTimer();  // Reiniciar el temporizador
