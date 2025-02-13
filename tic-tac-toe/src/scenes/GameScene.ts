@@ -93,10 +93,10 @@ export default class GameScene extends Phaser.Scene {
         });
 
 
-        if(this.isBoardFull()){
-            this.time.delayedCall(500, () => this.scene.start("DrawMessege"));
-        }else if(this.checkWinner(this.currentPlayer)){
+        if(this.checkWinner(this.currentPlayer)){
             this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
+        }else if(this.isBoardFull()){
+            this.time.delayedCall(500, () => this.scene.start("DrawMessege"));
         }else{
             this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
             this.updateTurnText();
@@ -142,7 +142,7 @@ export default class GameScene extends Phaser.Scene {
 
                 if (this.timeLeft <= 0) {
                     this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
-                    this.startTimer();  // Reiniciar el temporizador
+                    this.startTimer();
                 }
             }
         });
