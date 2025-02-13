@@ -56,16 +56,24 @@ export default class GameScene extends Phaser.Scene {
         if (this.board[row][col] !== "") return;
         this.board[row][col] = this.currentPlayer;
         this.clickSound.play();
-        this.add.image(cell.x, cell.y, `${this.currentPlayer}`).setScale(0.5);
-
-        if(this.isBoardFull()){
-            this.time.delayedCall(500, () => this.scene.start("DrawMessege"));
-        }else if(this.checkWinner(this.currentPlayer)){
-            this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
-        }else{
-            this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
-        }
-
+        const playerImg=this.add.image(cell.x, cell.y, `${this.currentPlayer}`).setScale(0);
+        this.tweens.add({
+            targets: playerImg,
+            alpha:1,
+            scaleX:0.6,
+            scaleY:0.6,
+            duration: 500,
+            ease: 'Power2',
+            onComplete: () => {
+                if(this.isBoardFull()){
+                    this.time.delayedCall(500, () => this.scene.start("DrawMessege"));
+                }else if(this.checkWinner(this.currentPlayer)){
+                    this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
+                }else{
+                    this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
+                }
+            }
+        });
     }
     checkWinner(player: string): boolean {
         for (let i = 0; i < 3; i++) {
