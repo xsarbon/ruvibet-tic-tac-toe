@@ -13,6 +13,7 @@ export default class GameScene extends Phaser.Scene {
     private timer: Phaser.Time.TimerEvent;
     private timeLeft: number = 10;
     private timerText: Phaser.GameObjects.Text;
+    private turnText: Phaser.GameObjects.Text;
     
 
     constructor() {
@@ -32,6 +33,13 @@ export default class GameScene extends Phaser.Scene {
             fontSize: "40px",
             color: "#000",
             fontFamily: "Arial",
+            fontStyle: "bold",
+        }).setOrigin(0.5, 0.5);
+
+        this.turnText = this.add.text(960, 150, `Turno de: ${this.currentPlayer.toUpperCase()}`, {
+            fontSize: "35px",
+            color: "#000",
+            fontFamily: "Helvetica",
             fontStyle: "bold"
         }).setOrigin(0.5, 0.5);
 
@@ -91,6 +99,7 @@ export default class GameScene extends Phaser.Scene {
             this.time.delayedCall(500, () => this.scene.start("VictoryMessege", { winner: this.currentPlayer }));
         }else{
             this.currentPlayer = this.currentPlayer === "x" ? "o" : "x";
+            this.updateTurnText();
             this.startTimer();
         }
 
@@ -141,4 +150,8 @@ export default class GameScene extends Phaser.Scene {
             }
         });
     
-}};
+}
+updateTurnText() {
+    this.turnText.setText(`Turno de: ${this.currentPlayer.toUpperCase()}`);
+}
+};
