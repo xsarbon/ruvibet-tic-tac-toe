@@ -1,12 +1,12 @@
 import 'phaser';
 import config from './config/config';
-import ExampleScene from './scenes/ExampleScene';
+import PreloadScene from './scenes/PreloadScene';
+import GameScene from './scenes/GameScene';
 
 class Game extends Phaser.Game{
     constructor(){
         super(config);
-        this.scene.add('Example',ExampleScene);
-        this.scene.start('Example');
+        scene: [PreloadScene, GameScene];
     }
 }
 
